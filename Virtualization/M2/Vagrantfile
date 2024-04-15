@@ -1,0 +1,19 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure("2") do |config|
+  config.vm.define "SecondVM" do |second_vm|
+      config.vm.box = "bento/ubuntu-20.04"
+      config.vm.provider "virtualbox" do |vb|
+          vb.name = "SecondVM"
+          vb.gui = false
+          vb.memory = "1024"
+          vb.cpus = 1
+      end
+      config.vm.hostname = "SecondVM"
+      config.vm.synced_folder ".", "/home/vagrant/code",
+          owner: "www-data", group: "www-data"
+      config.vm.network "forwarded_port", guest: 80, host: 9000
+      config.vm.network "forwarded_port", guest: 3308, host: 33080
+      config.vm.network "private_network", ip: "192.168.33.11"
+  end
+end
