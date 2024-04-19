@@ -1,4 +1,4 @@
-# (2) Використання Ubuntu та Alpine Linux для розгортання веб-серверів Apache2 і Nginx
+# (2) Використання Ubuntu та Alpine Linux для розгортання веб-серверів Apache2 і Nginx:
 
 ## Перевірка версії Docker
 ```shell
@@ -57,3 +57,82 @@ apk add nginx
 ```shell
 nginx
 ```
+
+## (3) Робота з Docker та використання томів для спільного зберігання даних між різними контейнерами:
+
+# Створення тома Docker
+```shell
+docker volume create my_data_volume
+```
+# Створення контейнера my_container_1 з підключеним томом my_data_volume
+```shell
+docker run -it --name my_container_1 -v my_data_volume:/app ubuntu
+```
+# Перевірка вмісту папки /app
+```shell
+ls
+cd /app
+```
+# Створення файлу myfile.txt з текстом "Hello, Docker!"
+```shell
+echo "Hello, Docker!" > myfile.txt
+```
+# Перевірка наявності файлу myfile.txt
+```shell
+ls
+cat myfile.txt
+```
+# Вихід з контейнера my_container_1
+```shell
+exit
+```
+# Створення контейнера my_container_2 з підключеним томом my_data_volume
+```shell
+docker run -it --name my_container_2 -v my_data_volume:/app ubuntu
+```
+# Перевірка наявності файлу myfile.txt у папці /app
+```shell
+cd /app
+ls
+cat myfile.txt
+```
+# Оновлення списку пакетів
+```shell
+apt-get update
+```
+# Встановлення редактора тексту nano
+```shell
+apt-get install -y nano
+```
+# Зміна дозволів на файл myfile.txt
+```shell
+chmod 700 /app/myfile.txt
+```
+# Редагування файлу myfile.txt за допомогою nano
+```shell
+nano myfile.txt
+```
+# Вихід з контейнера my_container_2
+```shell
+exit
+```
+# Створення нового користувача user1 з UID 1000
+```shell
+useradd -m -u 1000 user1
+```
+# Перехід до облікового запису користувача user1
+```shell
+su user1
+```
+# Перевірка наявності файлу myfile.txt у папці /app
+```shell
+cd /app
+ls
+cat myfile.txt
+```
+# Редагування файлу myfile.txt за допомогою nano
+```shell
+nano myfile.txt
+```
+
+
