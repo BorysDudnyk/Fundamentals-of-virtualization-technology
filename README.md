@@ -218,7 +218,7 @@ RUN chmod +x /network.sh
 ```shell
 CMD ["/network.sh"]
 ```
-##network.sh:
+## network.sh:
 ```shell
 #!/bin/sh
 ```
@@ -231,4 +231,45 @@ ip addr add 192.168.0.2/24 dev eth0
 ip route add default via 192.168.0.1
 ```
 
+# (6) docker-compose для управління багатоконтейнерним додатком
+
+## Запуск додатку у фоновому режимі
+```shell
+docker-compose up -d
+```
+## Перевірка стану контейнерів
+```shell
+docker-compose ps
+```
+## Доступ до веб-сервісу через браузер
+## Перейдіть за посиланням http://localhost:8080/
+
+## Виконання команди в контейнері `db`
+```shell
+docker-compose exec db psql -U myuser -d mydatabase
+```
+## Зупинка та видалення контейнерів
+```shell
+docker-compose down
+```
+## Повторний запуск додатку у фоновому режимі
+```shell
+docker-compose up -d
+```
+## Перевірка стану контейнерів
+```shell
+docker-compose ps
+```
+## Зупинка та видалення контейнерів
+```shell
+docker-compose down
+```
+## Остаточний запуск додатку у фоновому режимі
+```shell
+docker-compose up -d
+```
+## Остаточна перевірка стану контейнерів
+```shell
+docker-compose ps
+```
 
