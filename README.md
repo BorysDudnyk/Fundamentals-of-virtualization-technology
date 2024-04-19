@@ -174,3 +174,61 @@ docker build -t my-apache2-image .
 docker run -d --name my-apache2-container -p 8080:80 my-apache2-image
 ```
 
+# (5) Створення та управління Docker-образами і контейнерами з можливостями мережевої адміністрації
+
+## Побудова Docker-образу
+```shell
+docker build -t networking-image .
+```
+## Запуск контейнера з правами мережевої адміністрації
+```shell
+docker run --cap-add=NET_ADMIN -it --name networking-container networking-image /bin/sh
+```
+## Перевірка мережевих налаштувань
+```shell
+ip addr show eth0
+ip route show
+```
+## Побудова образу з аргументами build
+```shell
+docker build -t networking-image --build-arg IP_ADDRESS=192.168.0.2 --build-arg IP_ADDRESS=192.168.0.1 .
+```
+## Запуск контейнера з новим образом і правами мережевої адміністрації
+```shell
+docker run --cap-add=NET_ADMIN -it --name networking-container networking-image /bin/sh
+```
+## Dockerfile:
+## Використання базового образу Alpine
+```shell
+FROM alpine
+```
+## Встановлення необхідних пакетів
+```shell
+RUN apk update && apk add iproute2 curl
+```
+## Копіювання мережевого скрипта
+```shell
+COPY network.sh /network.sh
+```
+## Надання дозволів на виконання скрипта
+```shell
+RUN chmod +x /network.sh
+```
+## Встановлення команди за замовчуванням
+```shell
+CMD ["/network.sh"]
+```
+##network.sh:
+```shell
+#!/bin/sh
+```
+## Додавання IP-адреси на інтерфейс eth0
+```shell
+ip addr add 192.168.0.2/24 dev eth0
+```
+## Додавання маршруту за замовчуванням
+```shell
+ip route add default via 192.168.0.1
+```
+
+
