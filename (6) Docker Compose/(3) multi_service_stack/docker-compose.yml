@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    networks:
+      - mynetwork
+
+  db:
+    image: postgres:alpine
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    networks:
+      - mynetwork
+
+  api:
+    image: node:alpine
+    ports:
+      - "3000:3000"
+    command: ["node", "-e", "require('http').createServer((req, res) => { res.end('Hello, World!') }).listen(3000)"]
+    networks:
+      - mynetwork
+  
+  
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    networks:
+      - mynetwork
+
+  apache2:
+    image: httpd:alpine
+    ports:
+      - "8081:80"
+    networks:
+      - mynetwork
+
+      
+networks:
+  mynetwork:
