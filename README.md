@@ -135,4 +135,42 @@ cat myfile.txt
 nano myfile.txt
 ```
 
+# (4) Створення та управління Docker-образами та контейнерами з використанням Nginx та Apache2
+
+## Створення директорії для лабораторії та перехід до неї
+```shell
+mkdir my_docker_lab
+cd my_docker_lab
+```
+## Створення конфігураційних файлів (редагуйте їх за необхідності)
+```shell
+notepad nginx.conf
+notepad supervisord.conf
+```
+## Побудова Docker-образу для Nginx
+```shell
+docker build -t my-nginx-image .
+```
+## Запуск контейнера з Nginx
+```shell
+docker run -d --name my-nginx-container -p 8080:80 my-nginx-image
+```
+## Зупинка та видалення контейнера та образу
+```shell
+docker stop my-nginx-container
+docker rm my-nginx-container
+docker rmi my-nginx-image
+```
+## Побудова образу Nginx з аргументом build
+```shell
+docker build -t my-nginx-image --build-arg NGINX_VERSION=3.17 .
+```
+## Побудова Docker-образу для Apache2
+```shell
+docker build -t my-apache2-image .
+```
+## Запуск контейнера з Apache2
+```shell
+docker run -d --name my-apache2-container -p 8080:80 my-apache2-image
+```
 
