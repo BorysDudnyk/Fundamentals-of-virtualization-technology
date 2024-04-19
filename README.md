@@ -272,4 +272,91 @@ docker-compose up -d
 ```shell
 docker-compose ps
 ```
+## version: '3': Визначає версію docker-compose.
+## services: Список сервісів (контейнерів) у додатку.
+## Кожен сервіс має властивості:
+## image: Образ Docker, який використовується для створення контейнера.
+## ports: Відображення портів між контейнером і хостом.
+## environment: Змінні оточення для налаштування сервісу.
+## command: Команда, яку потрібно виконати в контейнері (api сервіс).
+## networks: Визначає мережу, до якої підключений сервіс.
+## networks: Опис мереж, що використовуються додатком (mynetwork).
 
+# (7) Використання kubectl для управління кластерами Kubernetes:
+## Перевірка інформації про кластер
+```shell
+kubectl cluster-info
+```
+## Перевірка версії kubectl
+```shell
+kubectl version
+```
+## Застосування конфігурацій з файлу `test.yaml`
+```shell
+kubectl apply -f test.yaml
+```
+## Отримання інформації про розгортання (деплойменти)
+```shell
+kubectl get deployments
+```
+## Видалення розгортання з ім'ям `my-app-deployment`
+```shell
+kubectl delete deploy my-app-deployment
+```
+## Deployment і Service для Nginx
+
+## Цей файл визначає два ресурси Kubernetes: `Deployment` та `Service` для розгортання додатку на основі Nginx.
+
+## Deployment
+```shell
+- **apiVersion**: `apps/v1`
+- **kind**: `Deployment`
+- **metadata**: Визначає ім'я розгортання: `my-app-deployment`.
+- **spec**:
+    - **replicas**: `1`: Кількість реплік подів для розгортання.
+    - **selector**: Мітки для відбору подів: `app: my-app`.
+    - **template**: Шаблон для створення подів:
+        - **metadata**: Мітки для подів: `app: my-app`.
+        - **spec**: Специфікація подів:
+            - **containers**: Описує контейнер для подів:
+                - **name**: `my-app-container`
+                - **image**: `nginx:latest`: Образ Docker для контейнера.
+                - **ports**: Відкриває порт `80` у контейнері.
+```
+## Service
+```shell
+- **apiVersion**: `v1`
+- **kind**: `Service`
+- **metadata**: Ім'я сервісу: `my-app-service`.
+- **spec**:
+    - **selector**: Відбирає поди за міткою: `app: my-app`.
+    - **ports**: Визначає порти для сервісу:
+        - **protocol**: `TCP`
+        - **port**: `80`: Порт на хості.
+        - **targetPort**: `80`: Порт у поді.
+    - **type**: `ClusterIP`: Внутрішній IP-адрес сервісу.
+```
+## Цей YAML-файл дозволяє розгорнути додаток на основі Nginx і забезпечити доступ до нього через сервіс в межах кластера Kubernetes.
+
+# (8) Побудова і завантаження Docker-образів на Docker Hub:
+
+## Побудова Docker-образу Nginx
+```shell
+docker build -t kindudu/nginx-image .
+```
+## Завантаження образу Nginx на Docker Hub
+```shell
+docker push kindudu/nginx-image:latest
+```
+## Побудова Docker-образу Apache2
+```shell
+docker build -t kindudu/apache2-image .
+```
+## Завантаження образу Apache2 на Docker Hub
+```shell
+docker push kindudu/apache2-image:latest
+```
+## Перевірка завантаження образів на Docker Hub:
+## Для перевірки, переконайтеся, що образи були завантажені успішно на Docker Hub, переглянувши сторінку репозиторію:
+## https://hub.docker.com/repository/docker/kindudu/nginx-image
+## https://hub.docker.com/repository/docker/kindudu/apache2-image
