@@ -1,9 +1,9 @@
 # (2) Використання Ubuntu та Alpine Linux для розгортання веб-серверів Apache2 і Nginx
 
 ## Перевірка версії Docker
-'''shell
+```shell
 docker --version
-'''
+```
 ## Завантаження образу Ubuntu
 docker pull ubuntu
 
