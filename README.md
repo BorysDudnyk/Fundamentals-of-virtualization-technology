@@ -1,3 +1,90 @@
+# (1) 
+## Вивести версію Vagrant
+```shell
+vagrant --version
+```
+## Ініціалізувати Vagrantfile для віртуальної машини з образом Ubuntu Trusty 64
+```shell
+vagrant init ubuntu/trusty64
+```
+## Підключитися до віртуальної машини через SSH
+```shell
+vagrant ssh
+```
+## Ініціалізувати новий Vagrantfile для віртуальної машини з образом Ubuntu 20.04
+```shell
+vagrant init bento/ubuntu-20.04
+```
+## Переміститися до домашньої директорії віртуальної машини
+```shell
+cd
+```
+## Запустити віртуальну машину
+```shell
+vagrant up
+```
+## Підключитися до віртуальної машини через SSH
+```shell
+vagrant ssh
+```
+## Оновити пакети в системі
+```shell
+sudo apt-get update
+```
+## Встановити Python 3 і pip
+```shell
+sudo apt install -y python3 python3-pip
+```
+## Встановити FastAPI та Uvicorn
+```shell
+pip3 install fastapi uvicorn
+```
+## Створити файл main.py з кодом FastAPI за допомогою heredoc
+```shell
+cat <<EOF > main.py
+from typing import Union
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
+@app.get("/items/{item_id}")
+def read_item(item_id: int, q: Union[str, None] = None):
+    return {"item_id": item_id, "q": q}
+EOF
+```
+## Запустити FastAPI за допомогою Uvicorn на 0.0.0.0:8000
+```shell
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
+## Підключитися до віртуальної машини через SSH
+```shell
+vagrant ssh
+```
+## Зберегти стан віртуальної машини як snapshot з ім'ям backup1
+```shell
+vagrant snapshot save backup1
+```
+## Вивести список збережених snapshot'ів
+```shell
+vagrant snapshot list
+```
+## Призупинити віртуальну машину
+```shell
+vagrant suspend
+```
+## Вимкнути віртуальну машину
+```shell
+vagrant halt
+```
+## Видалити віртуальну машину
+```shell
+vagrant destroy
+```
+
 # (2) Використання Ubuntu та Alpine Linux для розгортання веб-серверів Apache2 і Nginx:
 
 ## Перевірка версії Docker
