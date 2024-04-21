@@ -1,4 +1,26 @@
 # (1) Віртуалізація:
+
+## В цьому файлі налаштувань Vagrant ми визначаємо одну віртуальну машину під назвою "FirstVM", яка використовує образ "bento/ubuntu-20.04". Ми також налаштовуємо VirtualBox для цієї машини, встановлюємо пам'ять та кількість процесорів. 
+```shell
+Vagrant.configure("2") do |config|
+  config.vm.define "FirstVM" do |first_vm|
+      config.vm.box = "bento/ubuntu-20.04"
+      config.vm.provider "virtualbox" do |vb|
+          vb.name = "FirstVM"
+          vb.gui = false
+          vb.memory = "1024"
+          vb.cpus = 1
+      end
+      config.vm.hostname = "FirstVM"
+      config.vm.synced_folder ".", "/home/vagrant/code",
+          owner: "www-data", group: "www-data"
+      config.vm.network "forwarded_port", guest: 80, host: 8000
+      config.vm.network "forwarded_port", guest: 3307, host: 33070
+      config.vm.network "private_network", ip: "192.168.33.10"
+      config.vm.provision "shell", path: "setup.sh"
+  end
+end
+```
 ## Вивести версію Vagrant
 ```shell
 vagrant --version
