@@ -1,4 +1,4 @@
-# (1) 
+# (1) Віртуалізація:
 ## Вивести версію Vagrant
 ```shell
 vagrant --version
